@@ -48,7 +48,7 @@ const PayPal = (props) => {
   return (
     <>
       {visible ?
-        <View style={[styles.paypalCont, { width: width / 1.08, height: height / 2 }]}>
+        <View style={[styles.paypalCont, { width: width / 1.08, height: height / 2 },{...props?.popupContainerStyle}]}>
           <View style={styles.innerCont}>
             {loader && <View style={styles.loader}>
               <ActivityIndicator size="large" color="#fff" />
@@ -81,7 +81,7 @@ const PayPal = (props) => {
         </View>
         : <></>
       }
-      <TouchableOpacity style={styles.paypalBtn} onPress={() => setVisible(!visible)}>
+      <TouchableOpacity style={[styles.paypalBtn,{...props?.buttonStyles}]} onPress={() => setVisible(!visible)}>
         <Text style={[styles.btnText, { ...props?.btnTextStyles }]}>Pay with Paypal</Text>
       </TouchableOpacity>
     </>

@@ -17,5 +17,17 @@
     "app"
   ],
   "author": "Zeeshan Karim",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "expo-paypal": "^1.1.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parallex12/expo-paypal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/parallex12/expo-paypal/issues"
+  },
+  "homepage": "https://github.com/parallex12/expo-paypal#readme"
 }
