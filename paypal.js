@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Platform, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Platform, StyleSheet, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
 import { Asset } from 'expo-asset';
 import { WebView } from 'react-native-webview';
 import { useAssets } from "expo-asset";
@@ -8,6 +8,7 @@ import { useWindowDimensions } from 'react-native';
 
 const PayPal = (props) => {
   const [loader, setLoader] = useState(true)
+  const [visible, setVisible] = useState(false)
   const [assets, error] = useAssets([require('./paypal.html')])
   const webviewRef = useRef()
   let { width, height } = useWindowDimensions();
@@ -45,39 +46,45 @@ const PayPal = (props) => {
   }, []);
 
   return (
-    props?.visible ?
-      <View style={[styles.paypalCont, { width: width / 1.08, height: height / 2 }]}>
-        <View style={styles.innerCont}>
-          {loader && <View style={styles.loader}>
-            <ActivityIndicator size="large" color="#fff" />
-          </View>}
-          <View style={{ flex: 1 }}>
-            {
-              assets !== undefined &&
-              error === undefined &&
-              assets[0].localUri !== null && (
+    <>
+      {visible ?
+        <View style={[styles.paypalCont, { width: width / 1.08, height: height / 2 }]}>
+          <View style={styles.innerCont}>
+            {loader && <View style={styles.loader}>
+              <ActivityIndicator size="large" color="#fff" />
+            </View>}
+            <View style={{ flex: 1 }}>
+              {
+                assets !== undefined &&
+                error === undefined &&
+                assets[0].localUri !== null && (
 
-                <WebView ref={webviewRef}
-                  source={renderedOnce ? { uri: assets[0].localUri } : undefined}
-                  scalesPageToFit={false}
-                  useWebKit={Platform.OS == 'ios'}
-                  onLoadEnd={() => passValues()}
-                  allowFileAccess={true}
-                  mixedContentMode="compatibility"
-                  style={{ width: '100%', height: '100%' }}
-                  onMessage={onMessage}
-                  allowUniversalAccessFromFileURLs={true}
-                  originWhitelist={['*']}
-                  javaScriptEnabledAndroid={true}
-                  javaScriptEnabled={true}
-                  injectedJavaScript={js}
-                  onLoad={updateSource}
-                />
-              )}
+                  <WebView ref={webviewRef}
+                    source={renderedOnce ? { uri: assets[0].localUri } : undefined}
+                    scalesPageToFit={false}
+                    useWebKit={Platform.OS == 'ios'}
+                    onLoadEnd={() => passValues()}
+                    allowFileAccess={true}
+                    mixedContentMode="compatibility"
+                    style={{ width: '100%', height: '100%' }}
+                    onMessage={onMessage}
+                    allowUniversalAccessFromFileURLs={true}
+                    originWhitelist={['*']}
+                    javaScriptEnabledAndroid={true}
+                    javaScriptEnabled={true}
+                    injectedJavaScript={js}
+                    onLoad={updateSource}
+                  />
+                )}
+            </View>
           </View>
         </View>
-      </View>
-      : <></>
+        : <></>
+      }
+      <TouchableOpacity style={styles.paypalBtn} onPress={() => setVisible(!visible)}>
+        <Text style={[styles.btnText, { ...props?.btnTextStyles }]}>Pay with Paypal</Text>
+      </TouchableOpacity>
+    </>
   )
 }
 
@@ -107,6 +114,22 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'red'
+  },
+  paypalBtn: {
+    width: 300,
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5
+  },
+  btnText: {
+    fontSize: 17,
+    color: '#222',
+    fontWeight: '600'
   }
 })
 export default PayPal

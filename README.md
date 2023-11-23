@@ -13,24 +13,24 @@ Paypal integration with expo ReactNative by Zeeshan Karim
 Before using this package please make sure your props are valid and all the required info are filled up in paypal.html inside package folder
 
 ```bash
-  import PayPal from "expo-paypal";
+    import PayPal from "expo-paypal";
 
     const PaymentScreen=()=>{
     
-    const [openPaypal,setOpenPaypal]= useState(false)
 
-    <PayPal 
-        amount={20}//i.e $20 
-        visible={openPaypal}
-        success={(a)=>{
-              //callback after payment has been successfully compleated
-              console.log(a)
-        }} 
-        failed={(a)=>{
-              //callback if payment is failed
-              console.log(a)
-        }}
-      />
+    <View style={{flex:1}}>
+      <PayPal 
+          amount={20}//i.e $20 
+          success={(a)=>{
+                //callback after payment has been successfully compleated
+                console.log(a)
+          }} 
+          failed={(a)=>{
+                //callback if payment is failed
+                console.log(a)
+          }}
+        />
+    </View>
     }
 
 ```
