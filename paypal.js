@@ -43,7 +43,12 @@ const PayPal = (props) => {
     }, Platform.OS == "ios" ? 3000 : 5000);
     return () => clearInterval(interval);
   }, []);
-  
+
+  const onOpen = () => {
+    props?.onPress(() =>
+      setVisible(!visible)
+    )
+  }
   return (
     <>
       {visible ?
@@ -82,7 +87,7 @@ const PayPal = (props) => {
         </View>
         : <></>
       }
-      <TouchableOpacity style={[styles.paypalBtn, { ...props?.buttonStyles }]} onPress={() => setVisible(!visible)}>
+      <TouchableOpacity style={[styles.paypalBtn, { ...props?.buttonStyles }]} onPress={onOpen}>
         <Text style={[styles.btnText, { ...props?.btnTextStyles }]}>{props?.title || "Pay with Paypal"}</Text>
       </TouchableOpacity>
     </>
@@ -93,7 +98,7 @@ const styles = StyleSheet.create({
   loader: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#222',
+    backgroundColor: '#fff',
     opacity: 0.5,
     position: 'absolute',
     zIndex: 999999999,
@@ -118,9 +123,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   innerCont: {
-    width: '90%',
-    height: '90%',
-    overflow:'hidden'
+    paddingTop:50,
+    width: '95%',
+    height: '100%',
+    overflow: 'hidden'
   },
   paypalBtn: {
     width: 300,

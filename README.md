@@ -18,18 +18,31 @@ Before using this package please make sure your props are valid and all the requ
     const PaymentScreen=()=>{
 
 
+  const sendPayment = async (startProcess) => {
+      if (amount === null) {
+        alert("Please enter amount")
+        return;
+      }
+      startProcess()
+    };
+
+
     <View style={{flex:1}}>
-      <PayPal
-          title="Pay with Paypal"
-          amount={20}//i.e $20
-          success={(a)=>{
-                //callback after payment has been successfully compleated
-                console.log(a)
-          }}
-          failed={(a)=>{
-                //callback if payment is failed
-                console.log(a)
-          }}
+     <PayPal
+        popupContainerStyle={{ height: 400 }}
+        onPress={(startProcess) => sendPayment(startProcess)}
+        title="Submit"
+        buttonStyles={styles?.Button}
+        btnTextStyles={styles?.text}
+        amount={23}//i.e $20
+        success={(a) => {
+              //callback after payment has been successfully compleated
+              console.log(a)
+        }}
+        failed={(a) => {
+              //callback if payment is failed
+              console.log(a)
+        }}
         />
     </View>
     }
