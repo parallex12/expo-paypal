@@ -5,8 +5,7 @@ Paypal integration with expo ReactNative by Zeeshan Karim
 ## Installation :
 
 ```bash
-npm i expo-paypal react-native-webview
-npx expo install expo-asset
+npm i expo-paypal 
 ```
 
 ## Usage :
@@ -21,7 +20,7 @@ Before using this package please make sure your props are valid and all the requ
 
     <View style={{flex:1}}>
       <PayPal
-          
+          title="Pay with Paypal"
           amount={20}//i.e $20
           success={(a)=>{
                 //callback after payment has been successfully compleated

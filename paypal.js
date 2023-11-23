@@ -1,9 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { View, Platform, StyleSheet, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
-import { Asset } from 'expo-asset';
 import { WebView } from 'react-native-webview';
 import { useAssets } from "expo-asset";
-import { readAsStringAsync } from "expo-file-system";
 import { useWindowDimensions } from 'react-native';
 
 const PayPal = (props) => {
@@ -15,6 +13,7 @@ const PayPal = (props) => {
   const [renderedOnce, setRenderedOnce] = useState(false)
   const [dataFromWebView, setDataFromWebView] = useState()
   let js = `document.getElementById("p").innerHTML=${props?.amount}`
+
   const updateSource = () => {
     setRenderedOnce(true)
   }
@@ -44,7 +43,7 @@ const PayPal = (props) => {
     }, Platform.OS == "ios" ? 3000 : 5000);
     return () => clearInterval(interval);
   }, []);
-
+  
   return (
     <>
       {visible ?
@@ -58,9 +57,8 @@ const PayPal = (props) => {
                 assets !== undefined &&
                 error === undefined &&
                 assets[0].localUri !== null && (
-
                   <WebView ref={webviewRef}
-                    source={renderedOnce ? { uri: assets[0].localUri } : undefined}
+                    source={renderedOnce ? { uri: assets[0].localUri } : { uri: "https://paypal.com" }}
                     scalesPageToFit={false}
                     useWebKit={Platform.OS == 'ios'}
                     onLoadEnd={() => passValues()}
@@ -77,7 +75,7 @@ const PayPal = (props) => {
                   />
                 )}
             </View>
-            <TouchableOpacity style={[styles.paypalBtn, { ...props?.buttonStyles }]} onPress={() => setVisible(false)}>
+            <TouchableOpacity style={[styles.paypalBtn, { ...props?.cancelBtnStyles }]} onPress={() => setVisible(false)}>
               <Text style={[styles.btnText, { ...props?.cancelBtnStyles }]}>Cancel</Text>
             </TouchableOpacity>
           </View>
@@ -107,15 +105,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // bottom: 0,
     backgroundColor: '#fff',
-
     zIndex: 99999999999999,
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden'
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   innerCont: {
-    width: '100%',
-    height: '100%',
+    width: '90%',
+    height: '90%',
+    overflow:'hidden'
   },
   paypalBtn: {
     width: 300,
