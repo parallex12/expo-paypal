@@ -1,6 +1,6 @@
 {
   "name": "expo-paypal",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Paypal payment gateway for expo from adlerware.",
   "main": "paypal.js",
   "scripts": {
