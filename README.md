@@ -16,14 +16,13 @@ Before using this package please make sure your props are valid and all the requ
 
    <PayPal 
       amount={20}//i.e $20 
-      orderID={<orderId(string)>} //transactionID
-      ProductionClientID={<ProductionClientID(string)>}
       success={(a)=>{
             //callback after payment has been successfully compleated
             console.log(a)
       }} 
       failed={(a)=>{
             //callback if payment is failed
+            console.log(a)
       }}
     />
 
