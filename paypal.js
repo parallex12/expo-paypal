@@ -19,16 +19,23 @@ const PayPal = (props) => {
   }
 
   const onMessage = (data) => {
-    setLoader(true)
-    setDataFromWebView(data.nativeEvent.data);
-    let d = JSON.parse(data.nativeEvent.data)
-    if (d.status == "COMPLETED") {
-      setTimeout(() => {
-        setLoader(false)
-        props?.onCapturePayment()
-      }, 2000);
-    } else {
-      alert("Something went wrong!")
+    try {
+      setLoader(true)
+      setDataFromWebView(data.nativeEvent.data);
+      let d = JSON.parse(data.nativeEvent.data)
+      if (d.status == "COMPLETED") {
+        setTimeout(() => {
+          setLoader(false)
+          props?.success(d)
+          setVisible(false)
+        }, 2000);
+      } else {
+        props?.failed("Something went wrong!")
+        alert("Something went wrong!")
+      }
+    } catch (e) {
+      console.log(e)
+      props?.failed(e)
     }
 
   }
@@ -123,7 +130,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   innerCont: {
-    paddingTop:50,
+    paddingTop: 50,
     width: '95%',
     height: '100%',
     overflow: 'hidden'
