@@ -5,7 +5,8 @@ Paypal integration with expo ReactNative by Zeeshan Karim
 ## Installation :
 
 ```bash
-npm i expo-paypal
+npm i expo-paypal react-native-webview
+npx expo install expo-asset
 ```
 
 ## Usage :
