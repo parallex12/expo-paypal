@@ -15,17 +15,23 @@ Before using this package please make sure your props are valid and all the requ
 ```bash
   import PayPal from "expo-paypal";
 
-   <PayPal 
-      amount={20}//i.e $20 
-      success={(a)=>{
-            //callback after payment has been successfully compleated
-            console.log(a)
-      }} 
-      failed={(a)=>{
-            //callback if payment is failed
-            console.log(a)
-      }}
-    />
+    const PaymentScreen=()=>{
+    
+    const [openPaypal,setOpenPaypal]= useState(false)
+
+    <PayPal 
+        amount={20}//i.e $20 
+        visible={openPaypal}
+        success={(a)=>{
+              //callback after payment has been successfully compleated
+              console.log(a)
+        }} 
+        failed={(a)=>{
+              //callback if payment is failed
+              console.log(a)
+        }}
+      />
+    }
 
 ```
 
