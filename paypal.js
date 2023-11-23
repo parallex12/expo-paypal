@@ -85,7 +85,7 @@ const PayPal = (props) => {
         : <></>
       }
       <TouchableOpacity style={[styles.paypalBtn, { ...props?.buttonStyles }]} onPress={() => setVisible(!visible)}>
-        <Text style={[styles.btnText, { ...props?.btnTextStyles }]}>Pay with Paypal</Text>
+        <Text style={[styles.btnText, { ...props?.btnTextStyles }]}>{props?.title || "Pay with Paypal"}</Text>
       </TouchableOpacity>
     </>
   )
