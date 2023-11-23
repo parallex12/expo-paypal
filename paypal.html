@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Add meta tags for mobile and IE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title> PayPal Checkout Integration | Client Demo </title>
+</head>
+
+
+
+<body>
+    <!-- Set up a container element for the button -->
+    <div id="cont">
+        <div id="paypal-button-container"></div>
+        <div id="p">hello</div>
+    </div>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=ARRqlfA6keAeDB0J0evltl_M9KGn6ctcn4XP80otC9yZjHfYUhG3mGDBpw2wcKRrIiXHQo9Vba4gQ7w9&currency=USD"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        document.getElementById('p').style.color='transparent'
+       window.addEventListener("load",(res)=>{
+        // alert(JSON.stringify(res))
+           paypal.Buttons({
+               // Set up the transaction
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: document.getElementById('p').innerHTML
+                            }
+                        }]
+                    });
+                },
+
+                // Finalize the transaction
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(orderData) {
+                        // Successful capture! For demo purposes:
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        var transaction = orderData.purchase_units[0].payments.captures[0];
+                        window.ReactNativeWebView.postMessage(JSON.stringify({status:transaction.status,orderID:transaction.id}))
+                    });
+                }
+
+                }).render('#paypal-button-container');
+       
+        
+            })
+        document.getElementById("cont").style.height=window.innerHeight+"px"
+        document.getElementById("paypal-button-container").style.display="flex"
+        document.getElementById("cont").style.display="flex"
+        document.getElementById("cont").style.flexDirection="column"
+        document.getElementById("cont").style.justifyContent="center"
+        
+    </script>
+</body>
+
+</html>
+    

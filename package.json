@@ -1,0 +1,21 @@
+{
+  "name": "expo-paypal",
+  "version": "1.2.0",
+  "description": "Paypal payment gateway for expo from adlerware.",
+  "main": "paypal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react native paypal",
+    "react native",
+    "expo paypal",
+    "expo",
+    "paypal",
+    "payment",
+    "method",
+    "app"
+  ],
+  "author": "Zeeshan Karim",
+  "license": "ISC"
+}
